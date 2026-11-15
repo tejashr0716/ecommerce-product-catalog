@@ -1,6 +1,8 @@
-# Flash Market — Catalog & Inventory API
+# Online Shopping Product Catalog & Store (FlashMarket)
 
 A real **Python / FastAPI / MySQL** project with a framework-free **HTML5, CSS3, and JavaScript** interface. Products live in MySQL, not browser storage. All displayed counts come from database queries.
+
+Live Showcase: [https://tejashr0716.github.io/flashcart/](https://tejashr0716.github.io/flashcart/)
 
 This is an interview-sized portfolio project, not a production commerce platform. Its **600 products, eight brands, prices, and ratings are synthetic sample data**, clearly labelled in the UI. Example prices are in INR.
 
