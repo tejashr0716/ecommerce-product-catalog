@@ -103,7 +103,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         response.headers["X-Response-Time-Ms"] = f"{(time.perf_counter() - started) * 1000:.2f}"
         if request.url.path != "/docs":
             response.headers["Content-Security-Policy"] = (
-                "default-src 'self'; script-src 'self'; style-src 'self'; "
+                "default-src 'self'; script-src 'self'; "
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+                "font-src 'self' https://fonts.gstatic.com data:; "
                 "connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; "
                 "base-uri 'none'; form-action 'self'"
             )

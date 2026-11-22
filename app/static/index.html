@@ -3,15 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Flash Market — a real FastAPI and MySQL catalog with live inventory updates.">
+  <meta name="description" content="Flash Market — A real FastAPI and MySQL luxury catalog with live inventory updates, inspired by Sézane.">
   <meta name="color-scheme" content="light dark">
-  <title>Flash Market · Catalog & Inventory</title>
+  <title>Flash Market Paris · L'Atelier Catalog & Live Inventory</title>
   <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css">
   <script src="/static/app.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalog">Skip to catalog</a>
+  
+  <!-- Sézane Editorial Announcement Banner -->
+  <aside class="announcement-bar" aria-label="Announcement">
+    <span>Édition Limitée · Atelier Parisien · Livraison Offerte dès 200€ · Retours Gratuits · Stock en Direct</span>
+  </aside>
+
   <header class="site-header">
     <div class="header-inner">
       <a class="wordmark" href="/" aria-label="Flash Market home">
@@ -33,11 +42,14 @@
   <main class="page">
     <section class="intro" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">CATALOG & INVENTORY</p>
-        <h1 id="page-title">Your inventory. <span>In sync.</span></h1>
-        <p class="intro-copy">Find products, manage availability, and see stock changes across sessions.</p>
+        <p class="eyebrow">MAISON FLASH MARKET · ÉDITION PARIS</p>
+        <h1 id="page-title">L'Inventaire du Marché. <span class="serif-italic">En Direct.</span></h1>
+        <p class="intro-copy">Pièces de créateurs, traçabilité des stocks en temps réel et synchronisation événementielle instantanée.</p>
       </div>
-      <div class="sample-note"><span class="sample-dot"></span><div><strong>Sample catalog</strong><span>Fictional products · Prices in INR</span></div></div>
+      <div class="sample-note">
+        <span class="sample-dot"></span>
+        <div><strong>Atelier Catalog</strong><span>Curated collection · Prices in INR</span></div>
+      </div>
     </section>
 
     <section class="metrics" aria-label="Live catalog totals">
@@ -61,9 +73,14 @@
 
     <section class="catalog-panel" id="catalog" aria-labelledby="catalog-title">
       <div class="panel-heading">
-        <div><h2 id="catalog-title">Product catalog</h2><p id="result-summary" aria-live="polite">Loading products…</p></div>
+        <div>
+          <h2 id="catalog-title">Le Catalogue des Pièces</h2>
+          <p id="result-summary" aria-live="polite">Loading products…</p>
+        </div>
         <div class="panel-actions">
-          <button type="button" class="button button-secondary" id="refresh-button"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 7a6.5 6.5 0 1 0 .2 5M16 3v4h-4" stroke-linecap="round" stroke-linejoin="round"/></svg> Refresh</button>
+          <button type="button" class="button button-secondary" id="refresh-button">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 7a6.5 6.5 0 1 0 .2 5M16 3v4h-4" stroke-linecap="round" stroke-linejoin="round"/></svg> Refresh
+          </button>
           <button type="button" class="button button-primary" id="add-button"><span aria-hidden="true">+</span> Add product</button>
         </div>
       </div>
@@ -121,9 +138,9 @@
 
   <dialog id="auth-dialog" aria-labelledby="auth-title">
     <form id="auth-form">
-      <div class="dialog-heading"><h2 id="auth-title">Unlock inventory</h2><button type="button" class="icon-button" data-close="auth-dialog" aria-label="Close">×</button></div>
-      <p class="dialog-copy">Use the admin key configured for this deployment. It stays in this tab’s memory and is never saved to browser storage.</p>
-      <label>Admin key<input id="admin-key" type="password" autocomplete="off" required minlength="32"></label>
+      <div class="dialog-heading"><h2 id="auth-title">Unlock inventory controls</h2><button type="button" class="icon-button" data-close="auth-dialog" aria-label="Close">×</button></div>
+      <p class="dialog-copy">Enter the administrator key configured for this deployment. The key is held in memory for this session and never written to cookies or storage.</p>
+      <label>Admin API key<input id="admin-key" type="password" autocomplete="current-password" required></label>
       <p class="form-error" id="auth-error" role="alert"></p>
       <div class="dialog-actions"><button type="button" class="button button-secondary" data-close="auth-dialog">Cancel</button><button type="submit" class="button button-primary">Unlock</button></div>
     </form>

@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#1769c2"/><path d="M23.5 7 12 22h7l-2.5 11L28 18h-7l2.5-11Z" fill="#fff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <rect width="40" height="40" fill="#1C1B1A"/>
+  <rect x="2" y="2" width="36" height="36" fill="none" stroke="#E8E2D7" stroke-width="0.75"/>
+  <text x="20" y="26" font-family="'Cormorant Garamond', Georgia, serif" font-size="18" font-weight="600" fill="#FBF9F6" text-anchor="middle" letter-spacing="1">FM</text>
+</svg>
