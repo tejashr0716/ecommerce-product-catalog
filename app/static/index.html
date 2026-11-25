@@ -3,197 +3,225 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Flash Market — A real FastAPI and MySQL luxury catalog with live inventory updates, inspired by Sézane.">
-  <meta name="color-scheme" content="light dark">
-  <title>Flash Market Paris · L'Atelier Catalog & Live Inventory</title>
-  <link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+  <meta name="description" content="Flash Market — E-Commerce Product Catalog & Inventory Platform">
+  <title>E-Commerce Product Catalog &amp; Inventory Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css">
-  <script src="/static/app.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#catalog">Skip to catalog</a>
-  
-  <!-- Sézane Editorial Announcement Banner -->
-  <aside class="announcement-bar" aria-label="Announcement">
-    <span>Édition Limitée · Atelier Parisien · Livraison Offerte dès 200€ · Retours Gratuits · Stock en Direct</span>
-  </aside>
 
-  <header class="site-header">
+  <!-- Announcement Banner -->
+  <div class="announcement-bar">
+    <span>Free Delivery on orders above ₹499</span>
+    <span class="sep">·</span>
+    <span>Easy 30-day Returns</span>
+    <span class="sep">·</span>
+    <span>Live Inventory Updates</span>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="site-header" id="site-header">
     <div class="header-inner">
-      <a class="wordmark" href="/" aria-label="Flash Market home">
-        <img src="/static/mark.svg" alt="" width="36" height="36">
-        <span>Flash<span class="wordmark-light"> Market</span></span>
+      <!-- Logo -->
+      <a class="logo-wrap" href="#" aria-label="Flash Market Home">
+        <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+          <circle cx="18" cy="18" r="18" fill="#FF3F6C"/>
+          <text x="18" y="23" text-anchor="middle" font-family="Figtree,system-ui,sans-serif" font-weight="800" font-size="13" fill="#fff">FM</text>
+        </svg>
+        <span class="logo-text">Flash Market</span>
       </a>
-      <nav aria-label="Primary">
-        <a href="#catalog" class="active">Catalog</a>
-        <button type="button" id="category-map-button">Category map</button>
-        <a href="/docs" target="_blank" rel="noopener">API docs <span aria-hidden="true">↗</span></a>
+
+      <!-- Primary Nav -->
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="#" class="nav-link active" data-cat="all">MEN</a>
+        <a href="#" class="nav-link" data-cat="women">WOMEN</a>
+        <a href="#" class="nav-link" data-cat="kids">KIDS</a>
+        <a href="#" class="nav-link" data-cat="home">HOME</a>
+        <a href="#" class="nav-link" data-cat="beauty">BEAUTY</a>
+        <a href="#" class="nav-link" data-cat="sports">SPORTS</a>
+        <a href="#" class="nav-link" data-cat="studio">STUDIO</a>
       </nav>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8.5" cy="8.5" r="5.75" stroke="#94969f" stroke-width="1.5"/>
+          <path d="M13 13l4 4" stroke="#94969f" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="search" class="search-bar" placeholder="Search for products, brands and more" id="search-input" autocomplete="off">
+      </div>
+
+      <!-- Header Actions -->
       <div class="header-actions">
-        <span class="live-status" id="live-status"><span class="status-dot"></span><span id="live-label">Connecting</span></span>
-        <button type="button" class="button button-secondary" id="admin-button">Unlock inventory</button>
+        <button class="icon-btn" aria-label="Profile" id="profile-btn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="icon-label">Profile</span>
+        </button>
+        <button class="icon-btn" aria-label="Wishlist" id="wishlist-btn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21C12 21 3 14.5 3 8.5A5.5 5.5 0 0112 5.1 5.5 5.5 0 0121 8.5C21 14.5 12 21 12 21Z" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="icon-label">Wishlist</span>
+          <span class="badge" id="wishlist-count">0</span>
+        </button>
+        <button class="icon-btn bag-btn" aria-label="Bag" id="bag-btn">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="icon-label">Bag</span>
+          <span class="badge" id="bag-count">0</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <main class="page">
-    <section class="intro" aria-labelledby="page-title">
-      <div>
-        <p class="eyebrow">MAISON FLASH MARKET · ÉDITION PARIS</p>
-        <h1 id="page-title">L'Inventaire du Marché. <span class="serif-italic">En Direct.</span></h1>
-        <p class="intro-copy">Pièces de créateurs, traçabilité des stocks en temps réel et synchronisation événementielle instantanée.</p>
-      </div>
-      <div class="sample-note">
-        <span class="sample-dot"></span>
-        <div><strong>Atelier Catalog</strong><span>Curated collection · Prices in INR</span></div>
-      </div>
-    </section>
+  <!-- Main Content -->
+  <div class="page-layout">
 
-    <section class="metrics" aria-label="Live catalog totals">
-      <button type="button" class="metric" id="metric-all">
-        <span class="metric-label">Total products <span aria-hidden="true">↗</span></span>
-        <strong id="stat-total">—</strong><span class="metric-caption" id="stat-samples">Reading from MySQL</span>
-      </button>
-      <button type="button" class="metric" id="metric-low">
-        <span class="metric-label">Low stock <span class="metric-icon warning" aria-hidden="true">!</span></span>
-        <strong id="stat-low">—</strong><span class="metric-caption">1–5 units · View products</span>
-      </button>
-      <button type="button" class="metric" id="metric-out">
-        <span class="metric-label">Out of stock <span class="metric-icon danger" aria-hidden="true">−</span></span>
-        <strong id="stat-out">—</strong><span class="metric-caption">0 units · View products</span>
-      </button>
-      <article class="metric">
-        <span class="metric-label">Inventory value <span class="metric-icon blue" aria-hidden="true">₹</span></span>
-        <strong id="stat-value">—</strong><span class="metric-caption" id="stat-units">Price × available units</span>
-      </article>
-    </section>
+    <!-- Left Filter Sidebar -->
+    <aside class="filter-sidebar" id="filter-sidebar">
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">CATEGORIES</h3>
+        <label class="filter-check"><input type="checkbox" name="cat" value="men" checked> Men</label>
+        <label class="filter-check"><input type="checkbox" name="cat" value="women"> Women</label>
+        <label class="filter-check"><input type="checkbox" name="cat" value="kids"> Kids</label>
+        <label class="filter-check"><input type="checkbox" name="cat" value="home"> Home</label>
+        <label class="filter-check"><input type="checkbox" name="cat" value="beauty"> Beauty</label>
+        <label class="filter-check"><input type="checkbox" name="cat" value="sports"> Sports</label>
+      </div>
 
-    <section class="catalog-panel" id="catalog" aria-labelledby="catalog-title">
-      <div class="panel-heading">
-        <div>
-          <h2 id="catalog-title">Le Catalogue des Pièces</h2>
-          <p id="result-summary" aria-live="polite">Loading products…</p>
-        </div>
-        <div class="panel-actions">
-          <button type="button" class="button button-secondary" id="refresh-button">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 7a6.5 6.5 0 1 0 .2 5M16 3v4h-4" stroke-linecap="round" stroke-linejoin="round"/></svg> Refresh
-          </button>
-          <button type="button" class="button button-primary" id="add-button"><span aria-hidden="true">+</span> Add product</button>
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">BRAND</h3>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Levi's"> Levi's <span class="filter-count">(42)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="H&M"> H&amp;M <span class="filter-count">(38)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Zara"> Zara <span class="filter-count">(31)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Nike"> Nike <span class="filter-count">(29)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Puma"> Puma <span class="filter-count">(27)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Allen Solly"> Allen Solly <span class="filter-count">(22)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Mango"> Mango <span class="filter-count">(18)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Pepe Jeans"> Pepe Jeans <span class="filter-count">(16)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="W"> W <span class="filter-count">(14)</span></label>
+        <label class="filter-check"><input type="checkbox" name="brand" value="Fabindia"> Fabindia <span class="filter-count">(11)</span></label>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">PRICE RANGE</h3>
+        <div class="price-display">₹<span id="price-min-label">0</span> — ₹<span id="price-max-label">5000</span></div>
+        <div class="slider-wrap">
+          <input type="range" id="price-min" min="0" max="5000" value="0" step="50" class="price-slider">
+          <input type="range" id="price-max" min="0" max="5000" value="5000" step="50" class="price-slider">
         </div>
       </div>
-      <form id="filters" class="filters" role="search" aria-label="Filter catalog">
-        <div class="filter-row">
-          <label class="search-field">Search
-            <input id="search" name="search" type="search" maxlength="100" placeholder="Product, SKU, or brand…" autocomplete="off">
-          </label>
-          <fieldset class="price-field">
-            <legend>Price range · ₹</legend>
-            <div class="price-inputs">
-              <input id="min-price" type="number" min="0" max="99999999.99" step="0.01" placeholder="Min" aria-label="Minimum price in INR">
-              <span aria-hidden="true">–</span>
-              <input id="max-price" type="number" min="0" max="99999999.99" step="0.01" placeholder="Max" aria-label="Maximum price in INR">
-            </div>
-          </fieldset>
-          <label>Availability
-            <select id="stock"><option value="all">All stock</option><option value="in">In stock (&gt;0)</option><option value="low">Low stock (1–5)</option><option value="out">Out of stock (0)</option></select>
-          </label>
-          <label>Brand<select id="brand"><option value="">All brands</option></select></label>
-          <label>Minimum rating
-            <select id="rating"><option value="">Any rating</option><option value="3">3.0 and above</option><option value="3.5">3.5 and above</option><option value="4">4.0 and above</option><option value="4.5">4.5 and above</option></select>
-          </label>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">COLOR</h3>
+        <div class="color-swatch-grid">
+          <label class="swatch-label" title="Black"><input type="checkbox" name="color" value="Black"><span class="swatch" style="background:#222"></span><span class="swatch-name">Black</span></label>
+          <label class="swatch-label" title="White"><input type="checkbox" name="color" value="White"><span class="swatch" style="background:#f5f5f5;border:1px solid #ccc"></span><span class="swatch-name">White</span></label>
+          <label class="swatch-label" title="Navy"><input type="checkbox" name="color" value="Navy"><span class="swatch" style="background:#1a2a6c"></span><span class="swatch-name">Navy</span></label>
+          <label class="swatch-label" title="Red"><input type="checkbox" name="color" value="Red"><span class="swatch" style="background:#e53e3e"></span><span class="swatch-name">Red</span></label>
+          <label class="swatch-label" title="Green"><input type="checkbox" name="color" value="Green"><span class="swatch" style="background:#276749"></span><span class="swatch-name">Green</span></label>
+          <label class="swatch-label" title="Blue"><input type="checkbox" name="color" value="Blue"><span class="swatch" style="background:#3182ce"></span><span class="swatch-name">Blue</span></label>
+          <label class="swatch-label" title="Pink"><input type="checkbox" name="color" value="Pink"><span class="swatch" style="background:#FF3F6C"></span><span class="swatch-name">Pink</span></label>
+          <label class="swatch-label" title="Beige"><input type="checkbox" name="color" value="Beige"><span class="swatch" style="background:#d9c9a8;border:1px solid #ccc"></span><span class="swatch-name">Beige</span></label>
         </div>
-        <div class="filter-secondary">
-          <label class="category-field">Category · includes descendants
-            <select id="category"><option value="">All categories</option></select>
-          </label>
-          <label class="sort-field">Sort by
-            <select id="sort"><option value="newest">Newest first</option><option value="name">Product name</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="rating_desc">Highest rating</option><option value="stock_desc">Most stock</option></select>
-          </label>
-          <button type="button" class="clear-button" id="clear-button">Clear filters</button>
-          <span class="load-note" id="load-note">MySQL-backed results</span>
-        </div>
-      </form>
-      <div class="error-box" id="catalog-error" role="alert" hidden><span id="error-message"></span><button type="button" class="button button-secondary" id="retry-button">Retry</button></div>
-      <div class="table-scroll" id="table-scroll" tabindex="0" aria-label="Product table, scroll horizontally on small screens">
-        <table>
-          <thead><tr><th scope="col">Product</th><th scope="col">Brand</th><th scope="col" class="numeric">Price</th><th scope="col">Availability</th><th scope="col" class="numeric">Rating</th><th scope="col">Inventory</th></tr></thead>
-          <tbody id="products-body"></tbody>
-        </table>
       </div>
-      <div class="empty-state" id="empty-state" hidden><strong>No matching products</strong><p>Try a wider price range or clear a filter.</p><button type="button" class="button button-secondary" id="empty-clear">Clear filters</button></div>
-      <footer class="pagination">
-        <span id="page-summary">20 products per page</span>
-        <div class="page-controls"><button type="button" class="button button-secondary" id="previous-page" aria-label="Previous page">←</button><span id="page-number">Page 1</span><button type="button" class="button button-secondary" id="next-page" aria-label="Next page">→</button></div>
-      </footer>
-    </section>
-    <div class="bottom-notes">
-      <p><span class="mini-dot"></span><span id="event-note">Stock updates are delivered through server-sent events.</span></p>
-      <a href="https://github.com/tejashr0716/flashmarket" target="_blank" rel="noopener">View source on GitHub ↗</a>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-heading">DISCOUNT</h3>
+        <label class="filter-radio"><input type="radio" name="discount" value="0"> All</label>
+        <label class="filter-radio"><input type="radio" name="discount" value="10"> 10% and above</label>
+        <label class="filter-radio"><input type="radio" name="discount" value="20"> 20% and above</label>
+        <label class="filter-radio"><input type="radio" name="discount" value="30"> 30% and above</label>
+        <label class="filter-radio"><input type="radio" name="discount" value="40"> 40% and above</label>
+      </div>
+
+      <button class="clear-filters-btn" id="clear-filters">Clear All Filters</button>
+    </aside>
+
+    <!-- Right: PLP Area -->
+    <div class="plp-area">
+      <!-- Pill Filters + Sort Row -->
+      <div class="plp-controls">
+        <div class="pill-filters" id="pill-filters">
+          <button class="pill active" data-pill="all">All</button>
+          <button class="pill" data-pill="bundle">Bundles</button>
+          <button class="pill" data-pill="new">New Arrivals</button>
+          <button class="pill" data-pill="sale">Sale</button>
+          <button class="pill" data-pill="u999">Under ₹999</button>
+          <button class="pill" data-pill="u1999">Under ₹1999</button>
+        </div>
+        <div class="sort-wrap">
+          <select class="sort-select" id="sort-select">
+            <option value="recommended">Recommended</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="new_first">New First</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Result Count -->
+      <div class="result-meta">
+        <span id="result-heading">Men T-shirts</span>
+        <span class="result-count" id="result-count">— 1,247 items</span>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid">
+        <!-- Cards injected by JS -->
+      </div>
     </div>
-    <noscript><p class="error-box">Enable JavaScript for the catalog interface. The REST API remains available at <a href="/docs">/docs</a>.</p></noscript>
-  </main>
+  </div>
 
-  <dialog id="auth-dialog" aria-labelledby="auth-title">
-    <form id="auth-form">
-      <div class="dialog-heading"><h2 id="auth-title">Unlock inventory controls</h2><button type="button" class="icon-button" data-close="auth-dialog" aria-label="Close">×</button></div>
-      <p class="dialog-copy">Enter the administrator key configured for this deployment. The key is held in memory for this session and never written to cookies or storage.</p>
-      <label>Admin API key<input id="admin-key" type="password" autocomplete="current-password" required></label>
-      <p class="form-error" id="auth-error" role="alert"></p>
-      <div class="dialog-actions"><button type="button" class="button button-secondary" data-close="auth-dialog">Cancel</button><button type="submit" class="button button-primary">Unlock</button></div>
-    </form>
-  </dialog>
-  <dialog id="stock-dialog" aria-labelledby="stock-title">
-    <form id="stock-form">
-      <div class="dialog-heading"><h2 id="stock-title">Adjust stock</h2><button type="button" class="icon-button" data-close="stock-dialog" aria-label="Close">×</button></div>
-      <p class="dialog-copy" id="stock-product"></p>
-      <label>Available units<input id="stock-units" type="number" min="0" max="100000" step="1" required></label>
-      <label>Reason<input id="stock-reason" type="text" minlength="3" maxlength="120" value="Manual adjustment" required></label>
-      <p class="dialog-hint">Saved in a transaction with an audit event. Other connected sessions refresh automatically.</p>
-      <p class="form-error" id="stock-error" role="alert"></p>
-      <div class="dialog-actions"><button type="button" class="button button-secondary" data-close="stock-dialog">Cancel</button><button type="submit" class="button button-primary">Save stock</button></div>
-    </form>
-  </dialog>
-  <dialog id="product-dialog" class="wide-dialog" aria-labelledby="product-form-title">
-    <form id="product-form">
-      <div class="dialog-heading"><h2 id="product-form-title">Add product</h2><button type="button" class="icon-button" data-close="product-dialog" aria-label="Close">×</button></div>
-      <div class="form-grid">
-        <label class="full-width">Product name<input id="product-name" type="text" minlength="3" maxlength="160" required></label>
-        <label>SKU<input id="product-sku" type="text" minlength="3" maxlength="32" pattern="[A-Z0-9][A-Z0-9\-]+" placeholder="FM-CUSTOM-001" required></label>
-        <label>Brand<select id="product-brand" required></select></label>
-        <label class="full-width">Third-level category<select id="product-category" required></select></label>
-        <label>Price · ₹<input id="product-price" type="number" min="0" max="99999999.99" step="0.01" required></label>
-        <label>Initial stock<input id="product-stock" type="number" min="0" max="100000" step="1" required></label>
-        <label>Rating · 0–5<input id="product-rating" type="number" min="0" max="5" step="0.1" value="0" required></label>
-        <label class="full-width">Description<textarea id="product-description" maxlength="1000" rows="3"></textarea></label>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">Flash Market</span>
+      <span class="footer-copy">E-Commerce Product Catalog &amp; Inventory Platform · © 2026</span>
+    </div>
+  </footer>
+
+  <!-- Quick View Modal -->
+  <div class="modal-overlay" id="modal-overlay" aria-modal="true" role="dialog" aria-label="Product Quick View" hidden>
+    <div class="modal-panel" id="modal-panel">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div class="modal-body">
+        <!-- Left: Image Gallery -->
+        <div class="modal-gallery" id="modal-gallery">
+          <!-- injected by JS -->
+        </div>
+        <!-- Right: Product Info -->
+        <div class="modal-info" id="modal-info">
+          <!-- injected by JS -->
+        </div>
       </div>
-      <p class="dialog-hint" id="product-hint">New products are marked as user-created, not sample records.</p>
-      <p class="form-error" id="product-error" role="alert"></p>
-      <div class="dialog-actions"><button type="button" class="button button-secondary" data-close="product-dialog">Cancel</button><button type="submit" class="button button-primary" id="product-save">Create product</button></div>
-    </form>
-  </dialog>
-  <dialog id="detail-dialog" class="wide-dialog" aria-labelledby="detail-title">
-    <div class="dialog-heading"><h2 id="detail-title">Product</h2><button type="button" class="icon-button" data-close="detail-dialog" aria-label="Close">×</button></div>
-    <p class="detail-sku" id="detail-sku"></p><p class="dialog-copy" id="detail-description"></p>
-    <dl class="detail-grid" id="detail-fields"></dl>
-    <div class="dialog-actions wrap-actions"><button type="button" class="button button-danger" id="archive-button">Archive</button><button type="button" class="button button-secondary" id="edit-button">Edit product</button><button type="button" class="button button-primary" id="detail-stock-button">Adjust stock</button></div>
-  </dialog>
-  <dialog id="archive-dialog" aria-labelledby="archive-title">
-    <form id="archive-form">
-      <div class="dialog-heading"><h2 id="archive-title">Archive product?</h2><button type="button" class="icon-button" data-close="archive-dialog" aria-label="Close">×</button></div>
-      <p class="dialog-copy" id="archive-name"></p>
-      <p class="dialog-hint">The product will disappear from the active catalog. Its inventory event history remains in MySQL.</p>
-      <p class="form-error" id="archive-error" role="alert"></p>
-      <div class="dialog-actions"><button type="button" class="button button-secondary" data-close="archive-dialog">Cancel</button><button type="submit" class="button button-danger">Archive product</button></div>
-    </form>
-  </dialog>
-  <dialog id="categories-dialog" class="wide-dialog" aria-labelledby="categories-title">
-    <div class="dialog-heading"><h2 id="categories-title">Three levels. One catalog.</h2><button type="button" class="icon-button" data-close="categories-dialog" aria-label="Close">×</button></div>
-    <p class="dialog-copy">Choose any category to include all of its descendants. The backend resolves the subtree with a recursive MySQL CTE.</p>
-    <div id="category-tree" class="category-tree"></div>
-  </dialog>
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
+
+  <!-- Bag Drawer -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <aside class="bag-drawer" id="bag-drawer" aria-label="Shopping Bag" hidden>
+    <div class="drawer-header">
+      <h2 class="drawer-title">My Bag</h2>
+      <button class="drawer-close" id="drawer-close" aria-label="Close bag">✕</button>
+    </div>
+    <div class="drawer-items" id="drawer-items">
+      <!-- injected by JS -->
+    </div>
+    <div class="drawer-footer" id="drawer-footer">
+      <!-- injected by JS -->
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
 </body>
 </html>
